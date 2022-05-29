@@ -5,7 +5,7 @@ function Banner() {
   return (
     <header className='banner' style={{
         backgroundsize:"cover",
-        backgroundImage:`url('https://webpages.scu.edu/ftp/lrlam/Images/Netflix_banner.jpg')`,
+        backgroundImage:`url('http://images6.fanpop.com/image/forum/220000/220276_1442818022945_full.png')`,
         backgroundPosition:"center center",
     }}>
     <div className="banner__contents">
