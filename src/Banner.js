@@ -1,31 +1,49 @@
 import React from 'react'
 import "./Banner.css"
+import axios from "./axios"; 
+import requests from "./Requests"
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 function Banner() {
+    const [movie, setMovie] = useState([]);
+
+    useEffect(() => {
+        async function fetchData(){
+            const request = await axios.get(requests.fetchNetflixOriginals);
+            setMovie(
+                request.data.results[
+                    Math.floor(Math.random() * requests.data.results.length -1)
+                ]
+            );
+            return request;
+        }
+        fetchData();
+    }, [])
+
+    console.log(movie);
+
     function truncate (string,n){
         return string?.length > n ? string.substr(0, n-1) + '...' : string;
     }
   return (
     <header className='banner' style={{
         backgroundsize:"cover",
-        backgroundImage:`url('http://images6.fanpop.com/image/forum/220000/220276_1442818022945_full.png')`,
+        backgroundImage: `url("https://image.tmdb.org/t/p/original/${movie?.backdrop_path}")`,
         backgroundPosition:"center center",
-    }}>
+    }}
+    >
     <div className="banner__contents">
-        <h1 className='banner__title'>Movie Name</h1>
+        <h1 className='banner__title'>
+            {/* {movie?.title || movie?Banner.name || movie?.original_name} */}
+            test
+        </h1>
         <div className="banner__buttons">
             <button className="banner__button">Play</button>
             <button className="banner__button">My List</button>
         </div>
         <h1 className="banner_description">
-        {truncate(
-            `This is a test description of our banner worldwide
-        This is a test description of our banner worldwide
-        This is a test description of our banner worldwide
-        This is a test description of our banner worldwide
-        This is a test description of our banner worldwide`,
-        130)
-        } 
+        {truncate(movie?.overview,130)} 
         </h1>
     </div>
     <div className="banner--fadeBottom" />
