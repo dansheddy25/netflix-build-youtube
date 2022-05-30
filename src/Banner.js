@@ -5,21 +5,29 @@ import requests from "./Requests"
 import { useEffect } from 'react';
 import { useState } from 'react';
 
-function Banner() {
-    const [movie, setMovie] = useState([]);
-
+const base_url = "https://image.tmdb.org/t/p/original";
+function Banner({fetchUrl}) {
+    const [movie, setMovies] = useState([]);
     useEffect(() => {
-        async function fetchData(){
-            const request = await axios.get(requests.fetchNetflixOriginals);
-            setMovie(
-                request.data.results[
-                    Math.floor(Math.random() * requests.data.results.length -1)
-                ]
-            );
-            return request;
-        }
-        fetchData();
-    }, [])
+		const fetchData = async () => {
+			await axios.get(fetchUrl)
+			.then(response => setMovies(response.data.results[Math.floor(Math.random() * response.data.results.length)]))
+		}
+		fetchData();
+	},[])
+    // useEffect(() => {
+    //     async function fetchData(){
+    //         const request = await axios.get(requests.fetchNetflixOriginals);
+    //         setMovie(
+    //             request.data.results[
+    //                 Math.floor(Math.random() * requests.data.results.length -1)
+    //             ]
+    //         );
+    //         return request;
+    //     }
+    //     fetchData();
+    // }, [])
+    
 
     console.log(movie);
 
@@ -27,27 +35,21 @@ function Banner() {
         return string?.length > n ? string.substr(0, n-1) + '...' : string;
     }
   return (
-    <header className='banner' style={{
-        backgroundsize:"cover",
-        backgroundImage: `url("https://image.tmdb.org/t/p/original/${movie?.backdrop_path}")`,
-        backgroundPosition:"center center",
-    }}
-    >
-    <div className="banner__contents">
-        <h1 className='banner__title'>
-            {/* {movie?.title || movie?Banner.name || movie?.original_name} */}
-            test
-        </h1>
-        <div className="banner__buttons">
-            <button className="banner__button">Play</button>
-            <button className="banner__button">My List</button>
-        </div>
-        <h1 className="banner_description">
-        {truncate(movie?.overview,130)} 
-        </h1>
-    </div>
-    <div className="banner--fadeBottom" />
-    </header>
+   <header className='header' style={{backgroundImage:`url(${base_url + movie.backdrop_path})`}}>
+			<div className="header_left">
+				<h1 className="title">
+					{movie.original_name}
+				</h1>
+				<div>
+					<button className="btn">Play</button>
+					<button className="btn">My List</button>
+				</div>
+				<p className="description">
+					{truncate(movie.overview,150)}
+				</p>
+			</div>
+			
+		</header>
   )
 }
 
