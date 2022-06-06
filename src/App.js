@@ -3,14 +3,21 @@ import './App.css';
 import HomeScreen from './HomeScreen';
 import {
   BrowserRouter as Router,
-  Switch,
-  Route
-} from "react-router-dom"
+  Routes,
+  Route,
+  Switch
+} from "react-router-dom";
 
 function App() {
   return (
     <div className="app">
-    <HomeScreen />
+    <Router>
+    <Routes>
+        <Route path="/" >
+        <HomeScreen />
+        </Route>
+      </Routes>
+    </Router>
     </div>
   );
 }
