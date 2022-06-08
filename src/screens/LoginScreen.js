@@ -1,7 +1,6 @@
-import React from 'react'
+import { useState } from 'react';
 import './LoginScreen.css'
 import SignupScreen from './SignupScreen';
-import { useState } from 'react';
 
 function LoginScreen() {
   const [signIn, setSignIn] = useState(false);
